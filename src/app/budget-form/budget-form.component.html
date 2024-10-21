@@ -1,4 +1,74 @@
-<!-- BUILT IT FROM:
-https://getbootstrap.com/docs/5.3/forms/form-control/#example
-https://getbootstrap.com/docs/5.3/forms/select/#default
-https://getbootstrap.com/docs/5.3/forms/select/#default -->
+<div class="container mt-4">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="clientName" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="clientName" formControlName="client">
+        </div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Fecha</label>
+            <input type="date" class="form-control" id="date" formControlName="date">
+        </div>
+
+        <div formArrayName="modules">
+            @for (module of modules.controls; track $index) {
+            <div [formGroupName]="$index" class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="card-title">Módulo #{{$index + 1}}</h5>
+                        <button type="button" class="btn-close" (click)="quitarModule($index)"></button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tipo Módulo</label>
+                            <select class="form-select" formControlName="moduleTypeId">
+                                <option value="">Seleccione...</option>
+                                @for (item of moduleTypes; track $index) {
+                                    <option [value]="item.id">{{item.name}}</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ambiente</label>
+                            <select class="form-select" formControlName="zone">
+                                <option value="">Seleccione...</option>
+                                @for (item of zones; track $index) {
+                                    <option [value]="item">{{item}}</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Precio</label>
+                            <input type="text" readonly
+                                class="form-control bg-light">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Slots</label>
+                            <input type="text" readonly class="form-control bg-light">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button type="button" (click)="agregarModule()" class="btn btn-success">
+                + Módulo
+            </button>
+
+            <div>
+                <button type="button" routerLink="/" class="btn btn-secondary me-2">
+                    Volver
+                </button>
+                <button type="submit" [disabled]="!form.valid || modules.length < 5"
+                    class="btn btn-primary">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
