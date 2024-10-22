@@ -52,9 +52,8 @@ constructor() {}
 
   agregarModule() {
     const module = new FormGroup({
-      moduleType: new FormControl(''),
-      zone: new FormControl(''),
-      quantity: new FormControl(''),
+      moduleType: new FormControl('', [Validators.required]),
+      zone: new FormControl('', [Validators.required]),
     });
     this.modules.push(module);
   }
