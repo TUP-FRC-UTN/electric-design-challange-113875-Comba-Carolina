@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ModuleType, Budget } from '../models/budget';
 
 @Injectable({
@@ -11,6 +11,16 @@ export class BudgetService {
   private http = inject(HttpClient);
 
   private apiUrl: string = 'http://localhost:3000';
+
+  private budgetDetail = new BehaviorSubject<string | undefined>(undefined);
+
+  setBudgetDetail(budget: string | undefined) {
+    this.budgetDetail.next(budget);
+  }
+
+  getBudgetDetail(): Observable<string | undefined> {
+    return this.budgetDetail.asObservable();
+  }
 
   
   getModuleTypes(): Observable<ModuleType[]> {

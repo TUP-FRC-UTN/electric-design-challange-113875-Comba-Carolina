@@ -58,8 +58,6 @@ constructor() {}
     this.modules.push(module);
   }
 
-  
-
   getModulePrice(index: number): number {
     const moduleTypeId = this.modules.at(index).get('moduleType')?.value;
     const moduleType = this.moduleTypes.find((moduleType) => moduleType.id === moduleTypeId);

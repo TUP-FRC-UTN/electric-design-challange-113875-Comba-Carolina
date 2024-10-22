@@ -11,8 +11,7 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
   templateUrl: './budget-list.component.html',
   styleUrl: './budget-list.component.css',
 })
-export class BudgetListComponent implements OnInit{
-    
+export class BudgetListComponent implements OnInit {
   /* ADDITIONAL DOCS:
     - https://angular.dev/guide/components/lifecycle#
     - https://angular.dev/guide/http/making-requests#http-observables
@@ -23,11 +22,16 @@ export class BudgetListComponent implements OnInit{
     - https://angular.dev/guide/testing/components-scenarios#example-17 (async pipe)
   */
 
-    budgets: Budget[] = [];
-    private budgetService = inject(BudgetService);
-    
-    
-    ngOnInit(): void {
-      this.budgetService.getBudgets().subscribe(budgets => this.budgets = budgets);
-    }
+  budgets: Budget[] = [];
+  private budgetService = inject(BudgetService);
+
+  ngOnInit(): void {
+    this.budgetService
+      .getBudgets()
+      .subscribe((budgets) => (this.budgets = budgets));
+  }
+
+  viewBudget(arg0: string | undefined) {
+    this.budgetService.setBudgetDetail(arg0);
+  }
 }

@@ -17,7 +17,7 @@
         <td>{{budget.date | date}}</td>
         <td>{{budget.modules.length}}</td>
         <td>
-          <button class="btn" [routerLink]="['/details', budget.id]">
+          <button class="btn" type="button" (click)="viewBudget(budget.id)" [routerLink]="['/details', budget.id]">
             <i class="bi bi-calculator"></i>
           </button>
         </td>
