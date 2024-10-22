@@ -1,1 +1,8 @@
 <!-- BUILD IT FROM HERE https://getbootstrap.com/docs/5.3/components/card/#sizing -->
+@if(budget){
+<h2>Detalle del presupuesto</h2>
+@for (item of budget.modules; track $index) {
+<p>{{item.zone}}</p>
+<p>{{item.moduleType.name}} ({{item.moduleType.slots}}) - {{item.moduleType.price | currency}}</p>
+}
+}

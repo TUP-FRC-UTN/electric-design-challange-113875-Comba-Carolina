@@ -1,5 +1,21 @@
 {
-  "budgets": [],
+  "budgets": [
+    {
+      "id": "a171",
+      "client": "CAROLINA COMBA",
+      "date": "2024-10-21",
+      "modules": [
+        {
+          "moduleType": "1",
+          "zone": "Comedor"
+        },
+        {
+          "moduleType": "4",
+          "zone": "Cocina"
+        }
+      ]
+    }
+  ],
   "module-types": [
     {
       "id": "1",
