@@ -12,6 +12,7 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { ModuleType, Zone } from '../models/budget';
 import { BudgetService } from '../services/budget.service';
 import { CommonModule } from '@angular/common';
+import { DateValidator } from '../validations/date-validator';
 
 @Component({
   selector: 'app-budget-form',
@@ -29,8 +30,8 @@ export class BudgetFormComponent implements OnInit {
   private fb = inject(FormBuilder);
 
   form: FormGroup = new FormGroup({
-    client: new FormControl(''),
-    date: new FormControl(''),
+    client: new FormControl('', [Validators.required]),
+    date: new FormControl('', [Validators.required, DateValidator.validarFecha]),
     modules: new FormArray([]),
   });
 

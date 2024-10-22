@@ -8,7 +8,6 @@ export interface Budget {
 export interface ModuleQuote {
   moduleType: ModuleType;
   zone: Zone;
-  quantity: number;
 }
 
 export enum Zone {

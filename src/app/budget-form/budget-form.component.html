@@ -3,11 +3,30 @@
         <div class="mb-3">
             <label for="clientName" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="clientName" formControlName="client">
+            @if(form.controls['client'].invalid && form.controls['client'].touched) {
+            @if(form.controls['client'].errors?.['required']) {
+            <div class="text-danger mt-2">
+                El nombre es requerido
+            </div>
+            }
+            }
         </div>
 
         <div class="mb-3">
             <label for="date" class="form-label">Fecha</label>
             <input type="date" class="form-control" id="date" formControlName="date">
+            @if(form.controls['date'].invalid && form.controls['date'].touched) {
+            @if(form.controls['date'].errors?.['required']) {
+            <div class="text-danger mt-2">
+                La fecha es requerida
+            </div>
+            }
+            @if(form.controls['date'].errors?.['errorFecha']) {
+            <div class="text-danger mt-2">
+                La fecha no puede ser mayor a la actual
+            </div>
+            }
+            }
         </div>
 
         <div formArrayName="modules">
@@ -25,7 +44,7 @@
                             <select class="form-select" formControlName="moduleType">
                                 <option value="" disabled selected>Seleccione...</option>
                                 @for (item of moduleTypes; track $index) {
-                                    <option [value]="item.id">{{item.name}}</option>
+                                <option [value]="item.id">{{item.name}}</option>
                                 }
                             </select>
                         </div>
@@ -35,21 +54,21 @@
                             <select class="form-select" formControlName="zone">
                                 <option value="" disabled selected>Seleccione...</option>
                                 @for (item of zones; track $index) {
-                                    <option [value]="item">{{item}}</option>
+                                <option [value]="item">{{item}}</option>
                                 }
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Precio</label>
-                            <input type="text" [value]="getModulePrice($index) | currency"
-                            readonly class="form-control bg-light">
+                            <input type="text" [value]="getModulePrice($index) | currency" readonly
+                                class="form-control bg-light">
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Slots</label>
                             <input type="text" [value]="getModuleSlots($index)" readonly class="form-control bg-light">
-                          </div>
-                          
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -65,8 +84,7 @@
                 <button type="button" routerLink="/" class="btn btn-secondary me-2">
                     Volver
                 </button>
-                <button type="submit" [disabled]="!form.valid || modules.length < 3"
-                    class="btn btn-primary">
+                <button type="submit" [disabled]="!form.valid" class="btn btn-primary">
                     Guardar
                 </button>
             </div>
