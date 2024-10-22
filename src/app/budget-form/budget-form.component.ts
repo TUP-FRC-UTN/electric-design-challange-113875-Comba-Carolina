@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './budget-form.component.css',
 })
 export class BudgetFormComponent implements OnInit {
+
   moduleTypes: ModuleType[] = [];
   zones = Object.values(Zone);
   private router = inject(Router);
@@ -33,6 +34,13 @@ export class BudgetFormComponent implements OnInit {
     modules: new FormArray([]),
   });
 
+constructor() {}
+
+  ngOnInit(): void {
+    this.budgetService.getModuleTypes().subscribe((moduleTypes) => {
+      this.moduleTypes = moduleTypes;
+    });
+  }
   get modules() {
     return this.form.controls['modules'] as FormArray;
   }
@@ -50,14 +58,26 @@ export class BudgetFormComponent implements OnInit {
     this.modules.push(module);
   }
 
-  constructor() {}
-  ngOnInit(): void {
-    this.budgetService.getModuleTypes().subscribe((moduleTypes) => {
-      this.moduleTypes = moduleTypes;
-    });
+  
+
+  getModulePrice(index: number): number {
+    const moduleTypeId = this.modules.at(index).get('moduleType')?.value;
+    const moduleType = this.moduleTypes.find((moduleType) => moduleType.id === moduleTypeId);
+    return moduleType ? moduleType.price : 0;
   }
 
+  getModuleSlots(index: number): number {
+    const moduleTypeId = this.modules.at(index).get('moduleType')?.value;
+    const moduleType = this.moduleTypes.find((moduleType) => moduleType.id === moduleTypeId);
+    return moduleType ? moduleType.slots : 0;
+  }
+  
+
   onSubmit() {
-    throw new Error('Method not implemented.');
+    if (this.form.valid) {
+      this.budgetService
+        .createBudget(this.form.value)
+        .subscribe(() => this.router.navigate(['/list']));
+    }
   }
 }
